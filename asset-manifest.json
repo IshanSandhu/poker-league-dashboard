@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/poker-league-dashboard/static/css/main.010b60df.css",
+    "main.js": "/poker-league-dashboard/static/js/main.b9a17b0e.js",
+    "static/js/453.e3020472.chunk.js": "/poker-league-dashboard/static/js/453.e3020472.chunk.js",
+    "index.html": "/poker-league-dashboard/index.html",
+    "main.010b60df.css.map": "/poker-league-dashboard/static/css/main.010b60df.css.map",
+    "main.b9a17b0e.js.map": "/poker-league-dashboard/static/js/main.b9a17b0e.js.map",
+    "453.e3020472.chunk.js.map": "/poker-league-dashboard/static/js/453.e3020472.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.010b60df.css",
+    "static/js/main.b9a17b0e.js"
+  ]
+}
