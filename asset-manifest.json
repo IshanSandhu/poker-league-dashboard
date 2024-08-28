@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/poker-league-dashboard/static/css/main.010b60df.css",
-    "main.js": "/poker-league-dashboard/static/js/main.b9a17b0e.js",
+    "main.css": "/poker-league-dashboard/static/css/main.9fe61be9.css",
+    "main.js": "/poker-league-dashboard/static/js/main.fad1e230.js",
     "static/js/453.e3020472.chunk.js": "/poker-league-dashboard/static/js/453.e3020472.chunk.js",
     "index.html": "/poker-league-dashboard/index.html",
-    "main.010b60df.css.map": "/poker-league-dashboard/static/css/main.010b60df.css.map",
-    "main.b9a17b0e.js.map": "/poker-league-dashboard/static/js/main.b9a17b0e.js.map",
+    "main.9fe61be9.css.map": "/poker-league-dashboard/static/css/main.9fe61be9.css.map",
+    "main.fad1e230.js.map": "/poker-league-dashboard/static/js/main.fad1e230.js.map",
     "453.e3020472.chunk.js.map": "/poker-league-dashboard/static/js/453.e3020472.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.010b60df.css",
-    "static/js/main.b9a17b0e.js"
+    "static/css/main.9fe61be9.css",
+    "static/js/main.fad1e230.js"
   ]
 }
