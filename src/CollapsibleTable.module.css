@@ -69,3 +69,13 @@
 .stickyHeader {
 /* todo*/
 }
+
+.stickyDetails {
+  position: sticky !important;
+  font-weight: bold !important;
+  top: 0 !important;
+  background-color: white  !important; /* Matches the background color of the table or container */
+  z-index: 2 !important; /* Ensure it's above other content */
+  padding: 8px !important; /* Add some padding if needed */
+  border-bottom:1px solid #ccc !important; /* Optional: Adds a border to separate from table */
+}

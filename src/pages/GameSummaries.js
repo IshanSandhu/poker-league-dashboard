@@ -5,8 +5,7 @@ import {
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { fetchGameSummaries } from '../sheets'; 
-import { formatCurrency } from '../formats';
-import { formatPercentage } from '../formats';
+import { formatCurrency, formatPercentage } from '../formats';
 import styles from '../CollapsibleTable.module.css';
 
 function Row({ row }) {
@@ -55,13 +54,13 @@ function Row({ row }) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography variant="h6" gutterBottom component="div" className={styles.nestedTitle}>
                 Game Details
               </Typography>
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <TableCell className={styles.headerCell} onClick={() => requestSort('player')}>Player</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyColumn}`} onClick={() => requestSort('player')}>Player</TableCell>
                     <TableCell className={styles.headerCell} onClick={() => requestSort('buyIn')}>Buy In $</TableCell>
                     <TableCell className={styles.headerCell} onClick={() => requestSort('buyBack')}>Buy Back $</TableCell>
                     <TableCell className={styles.headerCell} onClick={() => requestSort('totalIn')}>Total $ In</TableCell>
@@ -73,7 +72,7 @@ function Row({ row }) {
                 <TableBody>
                   {sortedPlayers.map((player, index) => (
                     <TableRow key={index}>
-                      <TableCell className={styles.bodyCell}>{player.player}</TableCell>
+                      <TableCell className={`${styles.bodyCell} ${styles.stickyColumn}`}>{player.player}</TableCell>
                       <TableCell className={styles.bodyCell}>{formatCurrency(player.buyIn)}</TableCell>
                       <TableCell className={styles.bodyCell}>{formatCurrency(player.buyBack)}</TableCell>
                       <TableCell className={styles.bodyCell}>{formatCurrency(player.totalIn)}</TableCell>
