@@ -88,20 +88,22 @@ export default function PlayerTable() {
     const { key, direction } = sortConfig;
     
     sortableRows.sort((a, b) => {
-      // Use parsed values for sorting
-      const aValue = parseFormattedValue(a[key]);
-      const bValue = parseFormattedValue(b[key]);
-
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
+      if (key === 'playerName') {
+        // Sort alphabetically for player names
+        const aValue = a[key].toLowerCase();
+        const bValue = b[key].toLowerCase();
         return direction === 'asc'
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
-      }
+      } else {
+        // Use parsed values for numerical sorting
+        const aValue = parseFormattedValue(a[key]);
+        const bValue = parseFormattedValue(b[key]);
 
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return direction === 'asc' ? aValue - bValue : bValue - aValue;
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return direction === 'asc' ? aValue - bValue : bValue - aValue;
+        }
       }
-
       return 0;
     });
 
