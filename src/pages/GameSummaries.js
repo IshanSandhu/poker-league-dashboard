@@ -11,6 +11,31 @@ import styles from '../CollapsibleTable.module.css';
 
 function Row({ row }) {
   const [open, setOpen] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: 'player', direction: 'asc' });
+
+  const sortedPlayers = React.useMemo(() => {
+    let sortablePlayers = [...row.players];
+    if (sortConfig !== null) {
+      sortablePlayers.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortablePlayers;
+  }, [row.players, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
     <>
@@ -36,17 +61,17 @@ function Row({ row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <TableCell className={styles.headerCell}>Player</TableCell>
-                    <TableCell className={styles.headerCell}>Buy In $</TableCell>
-                    <TableCell className={styles.headerCell}>Buy Back $</TableCell>
-                    <TableCell className={styles.headerCell}>Total $ In</TableCell>
-                    <TableCell className={styles.headerCell}>Total $ Out</TableCell>
-                    <TableCell className={styles.headerCell}>Winnings</TableCell>
-                    <TableCell className={styles.headerCell}>Return</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('player')}>Player</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('buyIn')}>Buy In $</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('buyBack')}>Buy Back $</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('totalIn')}>Total $ In</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('totalOut')}>Total $ Out</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('winnings')}>Winnings</TableCell>
+                    <TableCell className={styles.headerCell} onClick={() => requestSort('return')}>Return</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.players.map((player, index) => (
+                  {sortedPlayers.map((player, index) => (
                     <TableRow key={index}>
                       <TableCell className={styles.bodyCell}>{player.player}</TableCell>
                       <TableCell className={styles.bodyCell}>{formatCurrency(player.buyIn)}</TableCell>
@@ -72,7 +97,6 @@ export default function CollapsibleTable() {
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'asc' });
 
   useEffect(() => {
-    // Fetch and set the game summaries data
     fetchGameSummaries().then(data => setRows(data));
   }, []);
 
@@ -110,7 +134,7 @@ export default function CollapsibleTable() {
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell />
-              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game Date</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('date')}>Game Date</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game #</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('location')}>Location</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('playersPlaying')}># Players</TableCell>
