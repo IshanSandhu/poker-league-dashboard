@@ -32,11 +32,11 @@ export const fetchGameSummaries = async () => {
     }
     acc[gameNumber].players.push({
       player: playerName,
-      buyIn: parseToFloat(buyIn),
-      buyBack: parseToFloat(buyBack),
-      totalIn: parseToFloat(totalMoneyIn),
-      totalOut: parseToFloat(totalMoneyOut),
-      winnings: parseToFloat(winnings),
+      buyIn: parseToFloat(buyIn.toFixed(2)),
+      buyBack: parseToFloat(buyBack.toFixed(2)),
+      totalIn: parseToFloat(totalMoneyIn.toFixed(2)),
+      totalOut: parseToFloat(totalMoneyOut.toFixed(2)),
+      winnings: parseToFloat(winnings.toFixed(2)),
       return: returnPercent
     });
     return acc;
@@ -47,33 +47,6 @@ export const fetchGameSummaries = async () => {
   console.log("Grouped Game Summaries: ", rowsArray);
   return rowsArray;
 };
-
-// Helper function to safely convert values to floats
-const parseToFloat = (value) => {
-  return parseFloat(value && typeof value === 'string' ? value.replace(/[^\d.-]/g, '') : value) || 0;
-};
-
-function formatDateString(dateString) {
-  // Extract the components from the Date(yyyy,mm,dd) string
-  const regex = /Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/;
-  const match = dateString.match(regex);
-
-  if (match) {
-    const [, year, month, day] = match.map(Number);
-    const date = new Date(year, month, day); // Use zero-indexed month directly
-
-    // Define an array of month names
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    // Format the date to "Month DD, yyyy"
-    return `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
-  } else {
-    throw new Error('Invalid date string format');
-  }
-}
 
 export const fetchPlayerStats = async () => {
   const response = await fetch(FULL_URL);
@@ -104,24 +77,54 @@ export const fetchPlayerStats = async () => {
       };
     }
     
-    // Aggregate data for the player
     acc[playerName].gamesPlayed += 1;
-    acc[playerName].totalPlayers += parseFloat(playersPlaying) || 0;
-    acc[playerName].totalBuyIn += parseFloat(buyIn);
-    acc[playerName].totalBuyBack += parseFloat(buyBack);
-    acc[playerName].totalIn += parseFloat(totalMoneyIn);
-    acc[playerName].totalOut += parseFloat(totalMoneyOut);
-    acc[playerName].totalWinnings += parseFloat(winnings);
+    acc[playerName].totalPlayers += parseFloat(playersPlaying);
+    acc[playerName].totalBuyIn += parseToFloat(buyIn);
+    acc[playerName].totalBuyBack += parseToFloat(buyBack);
+    acc[playerName].totalIn += parseToFloat(totalMoneyIn);
+    acc[playerName].totalOut += parseToFloat(totalMoneyOut);
+    acc[playerName].totalWinnings += parseToFloat(winnings);
 
     return acc;
   }, {});
 
-  // Convert the grouped data into an array with calculated averages and returns
   const processedRows = Object.values(groupedData).map(player => ({
     ...player,
-    avgPlayers: (player.totalPlayers / player.gamesPlayed).toFixed(2),
-    winningsPerGame: (player.totalWinnings / player.gamesPlayed).toFixed(2),
+    avgPlayers: parseFloat(player.totalPlayers / player.gamesPlayed).toFixed(2),
+    totalBuyIn: parseFloat(player.totalBuyIn).toFixed(2),
+    totalBuyBack: parseFloat(player.totalBuyBack).toFixed(2),
+    totalIn: parseFloat(player.totalIn).toFixed(2),
+    totalOut: parseFloat(player.totalOut).toFixed(2),
+    totalWinnings: parseFloat(player.totalWinnings).toFixed(2),
+    winningsPerGame: parseFloat(player.totalWinnings / player.gamesPlayed).toFixed(2),
     return: ((player.totalWinnings / player.totalIn) * 100).toFixed(2) + '%'
   }));
   return processedRows;
+}
+
+// Helper Functions
+const parseToFloat = (value) => {
+  return parseFloat(value && typeof value === 'string' ? value.replace(/[^\d.-]/g, '') : value) || 0;
+};
+
+function formatDateString(dateString) {
+  // Extract the components from the Date(yyyy,mm,dd) string
+  const regex = /Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/;
+  const match = dateString.match(regex);
+
+  if (match) {
+    const [, year, month, day] = match.map(Number);
+    const date = new Date(year, month, day); // Use zero-indexed month directly
+
+    // Define an array of month names
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    // Format the date to "Month DD, yyyy"
+    return `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
+  } else {
+    throw new Error('Invalid date string format');
+  }
 }

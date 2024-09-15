@@ -4,7 +4,8 @@ import {
   IconButton, Collapse, Box, Typography, Paper
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
-import { fetchPlayerStats } from '../sheets'; // Import the fetch function
+import { fetchPlayerStats } from '../sheets'; 
+import { formatCurrency } from '../formatCurrency';
 
 function PlayerRow({ row }) {
   const [open, setOpen] = useState(false);
@@ -19,13 +20,13 @@ function PlayerRow({ row }) {
         </TableCell>
         <TableCell>{row.playerName}</TableCell>
         <TableCell>{row.gamesPlayed}</TableCell>
-        <TableCell>{row.totalPlayers}</TableCell>
-        <TableCell>{row.totalBuyIn}</TableCell>
-        <TableCell>{row.totalBuyBack}</TableCell>
-        <TableCell>{row.totalIn}</TableCell>
-        <TableCell>{row.totalOut}</TableCell>
-        <TableCell>{row.totalWinnings}</TableCell>
-        <TableCell>{row.winningsPerGame}</TableCell>
+        <TableCell>{row.avgPlayers}</TableCell>
+        <TableCell>{formatCurrency(row.totalBuyIn)}</TableCell>
+        <TableCell>{formatCurrency(row.totalBuyBack)}</TableCell>
+        <TableCell>{formatCurrency(row.totalIn)}</TableCell>
+        <TableCell>{formatCurrency(row.totalOut)}</TableCell>
+        <TableCell>{formatCurrency(row.totalWinnings)}</TableCell>
+        <TableCell>{formatCurrency(row.winningsPerGame)}</TableCell>
         <TableCell>{row.return}</TableCell>
       </TableRow>
       <TableRow>
@@ -53,12 +54,12 @@ function PlayerRow({ row }) {
                   <TableRow>
                     <TableCell>{row.gamesPlayed}</TableCell>
                     <TableCell>{row.avgPlayers}</TableCell>
-                    <TableCell>{row.totalBuyIn}</TableCell>
-                    <TableCell>{row.totalBuyBack}</TableCell>
-                    <TableCell>{row.totalIn}</TableCell>
-                    <TableCell>{row.totalOut}</TableCell>
-                    <TableCell>{row.totalWinnings}</TableCell>
-                    <TableCell>{row.winningsPerGame}</TableCell>
+                    <TableCell>{formatCurrency(row.totalBuyIn)}</TableCell>
+                    <TableCell>{formatCurrency(row.totalBuyBack)}</TableCell>
+                    <TableCell>{formatCurrency(row.totalIn)}</TableCell>
+                    <TableCell>{formatCurrency(row.totalOut)}</TableCell>
+                    <TableCell>{formatCurrency(row.totalWinnings)}</TableCell>
+                    <TableCell>{formatCurrency(row.winningsPerGame)}</TableCell>
                     <TableCell>{row.return}</TableCell>
                   </TableRow>
                 </TableBody>
@@ -91,7 +92,7 @@ export default function PlayerTable() {
                 <TableCell />
                 <TableCell>Player</TableCell>
                 <TableCell>Games Played</TableCell>
-                <TableCell>Total Players</TableCell>
+                <TableCell>AVG Players</TableCell>
                 <TableCell>Buy In $</TableCell>
                 <TableCell>Buy Back $</TableCell>
                 <TableCell>Total $ In</TableCell>
