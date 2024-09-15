@@ -18,7 +18,8 @@ export const fetchGameSummaries = async () => {
     // Destructure the row data based on expected positions
     const [date, gameNumber, location, playerName, playersPlaying, buyIn, buyBack, totalMoneyIn, totalMoneyOut, winnings, returnPercent] = row.c.map(cell => cell.v);
     
-    const formattedDate = formatDateString(date)
+    const formattedDate = formatDateString(date);
+    const parsedTotalMoneyIn = parseToFloat(totalMoneyIn);
 
     if (!acc[gameNumber]) {
       acc[gameNumber] = {
@@ -26,27 +27,38 @@ export const fetchGameSummaries = async () => {
         gameNumber: gameNumber,
         location: location,
         playersPlaying: parseFloat(playersPlaying) || 0,
-        total: parseToFloat(totalMoneyIn), // Assuming 'Total $ In' represents the total money
+        total: 0, // Initialize total to 0, we'll sum it up later
         players: []
       };
     }
+
+    // Add this player's total money in to the game's total
+    acc[gameNumber].total += parsedTotalMoneyIn;
+
     acc[gameNumber].players.push({
       player: playerName,
-      buyIn: parseToFloat(buyIn.toFixed(2)),
-      buyBack: parseToFloat(buyBack.toFixed(2)),
-      totalIn: parseToFloat(totalMoneyIn.toFixed(2)),
-      totalOut: parseToFloat(totalMoneyOut.toFixed(2)),
-      winnings: parseToFloat(winnings.toFixed(2)),
+      buyIn: parseToFloat(buyIn),
+      buyBack: parseToFloat(buyBack),
+      totalIn: parsedTotalMoneyIn,
+      totalOut: parseToFloat(totalMoneyOut),
+      winnings: parseToFloat(winnings),
       return: returnPercent
     });
+
     return acc;
   }, {});
 
-  // Convert the grouped data into an array
-  const rowsArray = Object.values(groupedData);
+  // Convert the grouped data into an array and round the totals
+  const rowsArray = Object.values(groupedData).map(game => ({
+    ...game,
+    total: parseFloat(game.total.toFixed(2)) // Round to 2 decimal places
+  }));
+
   console.log("Grouped Game Summaries: ", rowsArray);
   return rowsArray;
 };
+
+// Assume formatDateString function is defined elsewhere
 
 export const fetchPlayerStats = async () => {
   const response = await fetch(FULL_URL);

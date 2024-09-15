@@ -1,0 +1,53 @@
+.tableContainer {
+    border-radius: 10px;
+  }
+  
+  .tableHead {
+    background-color: #F0F0F0;
+  }
+
+  .headerCell {
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    padding: 18px 10px;
+  }
+  
+  .dateHeaderCell {
+    font-weight: bold;
+    color: #1976d2; /* Material-UI's primary blue color */
+    background-color: #e3f2fd; /* A light blue background */
+    border-bottom: 2px solid #1976d2; /* Adds a bottom border */
+  }
+  
+  .bodyCell {
+    text-align: center !important;
+    white-space: nowrap;
+  }
+  
+  .title {
+    margin-bottom: 30px;
+  }
+
+  .tableHeaderCell {
+    text-align: center !important;
+    white-space: nowrap;
+    font-size: 18px !important;  /* Forces the font size */
+    font-weight: bold !important;
+    color: #333 !important;
+    padding: 16px 0px !important;
+    background-color: #f2f2f2 !important;
+  }
+
+  .playerTableHeaderCell {
+    text-align: center !important;
+    white-space: nowrap;
+    font-size: 14px !important;  /* Forces the font size */
+    font-weight: bold !important;
+    color: #333 !important;
+    padding: 10px 4px !important;
+    background-color: #f2f2f2 !important;
+  }

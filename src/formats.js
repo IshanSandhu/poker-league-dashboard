@@ -1,10 +1,4 @@
-// utils/currencyFormat.js
 
-/**
- * Formats a number as US currency.
- * @param {number} amount - The amount to format.
- * @returns {string} The formatted currency string.
- */
 export function formatCurrency(amount) {
     // Ensure the input is a number
     const numAmount = Number(amount);
@@ -23,9 +17,23 @@ export function formatCurrency(amount) {
       return `$${formatted}`;
     }
   }
-  
-  // Example usage:
-  // console.log(formatCurrency(123.45));    // "$123.45"
-  // console.log(formatCurrency(-67.89));    // "-$67.89"
-  // console.log(formatCurrency(1000));      // "$1000.00"
-  // console.log(formatCurrency(-0.5));      // "-$0.50"
+
+export function formatPercentage(number)
+{
+  // Ensure the input is a number
+  const numAmount = Number(number);
+
+  // if (isNaN(numAmount)) {
+  //   return 'Invalid Amount';
+  // }
+
+  const percentage = (number * 100).toFixed(2);
+
+      // Add appropriate sign and dollar symbol
+      if (numAmount < 0) {
+        return `${percentage}%`;
+      } else {
+        return `${percentage}%`;
+      }
+    
+}

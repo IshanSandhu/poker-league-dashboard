@@ -4,7 +4,10 @@ import {
   IconButton, Collapse, Box, Typography, Paper
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
-import { fetchGameSummaries } from '../sheets'; // Import the fetch function
+import { fetchGameSummaries } from '../sheets'; 
+import { formatCurrency } from '../formats';
+import { formatPercentage } from '../formats';
+import styles from '../CollapsibleTable.module.css';
 
 function Row({ row }) {
   const [open, setOpen] = useState(false);
@@ -17,11 +20,11 @@ function Row({ row }) {
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.date}</TableCell>
-        <TableCell>{row.gameNumber}</TableCell>
-        <TableCell>{row.location}</TableCell>
-        <TableCell>{row.playersPlaying}</TableCell>
-        <TableCell>{row.total}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.date}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.gameNumber}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.location}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.playersPlaying}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.total)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -33,25 +36,25 @@ function Row({ row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Player</TableCell>
-                    <TableCell>Buy In $</TableCell>
-                    <TableCell>Buy Back $</TableCell>
-                    <TableCell>Total $ In</TableCell>
-                    <TableCell>Total $ Out</TableCell>
-                    <TableCell>Winnings</TableCell>
-                    <TableCell>Return</TableCell>
+                    <TableCell className={styles.headerCell}>Player</TableCell>
+                    <TableCell className={styles.headerCell}>Buy In $</TableCell>
+                    <TableCell className={styles.headerCell}>Buy Back $</TableCell>
+                    <TableCell className={styles.headerCell}>Total $ In</TableCell>
+                    <TableCell className={styles.headerCell}>Total $ Out</TableCell>
+                    <TableCell className={styles.headerCell}>Winnings</TableCell>
+                    <TableCell className={styles.headerCell}>Return</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.players.map((player, index) => (
                     <TableRow key={index}>
-                      <TableCell>{player.player}</TableCell>
-                      <TableCell>{player.buyIn}</TableCell>
-                      <TableCell>{player.buyBack}</TableCell>
-                      <TableCell>{player.totalIn}</TableCell>
-                      <TableCell>{player.totalOut}</TableCell>
-                      <TableCell>{player.winnings}</TableCell>
-                      <TableCell>{player.return}</TableCell>
+                      <TableCell className={styles.bodyCell}>{player.player}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatCurrency(player.buyIn)}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatCurrency(player.buyBack)}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatCurrency(player.totalIn)}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatCurrency(player.totalOut)}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatCurrency(player.winnings)}</TableCell>
+                      <TableCell className={styles.bodyCell}>{formatPercentage(player.return)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -74,19 +77,19 @@ export default function CollapsibleTable() {
 
   return (
     <>
-      < Typography variant="h4" component="h1" gutterBottom style={{ marginBottom: '30px' }}>
+      <Typography variant="h4" component="h1" gutterBottom className={styles.title}>
         Game Summaries
       </Typography>
-      <TableContainer component={Paper} elevation={3} sx={{ boxShadow: 2 }} style={{ borderRadius: '10px' }}>
+      <TableContainer component={Paper} elevation={3} sx={{ boxShadow: 2 }} className={styles.tableContainer}>
         <Table aria-label="collapsible table">
-          <TableHead style={{ backgroundColor: '#F0F0F0' }}>
+          <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell />
-              <TableCell>Date</TableCell>
-              <TableCell>Game #</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell># Players</TableCell>
-              <TableCell>Total $</TableCell>
+              <TableCell className={styles.tableHeaderCell}>Date</TableCell>
+              <TableCell className={styles.tableHeaderCell}>Game #</TableCell>
+              <TableCell className={styles.tableHeaderCell}>Location</TableCell>
+              <TableCell className={styles.tableHeaderCell}># Players</TableCell>
+              <TableCell className={styles.tableHeaderCell}>Total $</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -5,7 +5,9 @@ import {
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { fetchPlayerStats } from '../sheets'; 
-import { formatCurrency } from '../formatCurrency';
+import { formatCurrency } from '../formats';
+import { formatPercentage } from '../formats';
+import styles from '../CollapsibleTable.module.css';
 
 function PlayerRow({ row }) {
   const [open, setOpen] = useState(false);
@@ -18,16 +20,16 @@ function PlayerRow({ row }) {
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.playerName}</TableCell>
-        <TableCell>{row.gamesPlayed}</TableCell>
-        <TableCell>{row.avgPlayers}</TableCell>
-        <TableCell>{formatCurrency(row.totalBuyIn)}</TableCell>
-        <TableCell>{formatCurrency(row.totalBuyBack)}</TableCell>
-        <TableCell>{formatCurrency(row.totalIn)}</TableCell>
-        <TableCell>{formatCurrency(row.totalOut)}</TableCell>
-        <TableCell>{formatCurrency(row.totalWinnings)}</TableCell>
-        <TableCell>{formatCurrency(row.winningsPerGame)}</TableCell>
-        <TableCell>{row.return}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.playerName}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.gamesPlayed}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.avgPlayers}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.totalBuyBack)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.totalIn)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.totalOut)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.totalWinnings)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
+        <TableCell className={styles.bodyCell}>{formatPercentage(row.return)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={11}>
@@ -39,28 +41,28 @@ function PlayerRow({ row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Cash Games Played</TableCell>
-                    <TableCell>AVG Players Playing</TableCell>
-                    <TableCell>Buy In $</TableCell>
-                    <TableCell>Buy Back $</TableCell>
-                    <TableCell>Total $ In</TableCell>
-                    <TableCell>Total $ Out</TableCell>
-                    <TableCell>Winnings</TableCell>
-                    <TableCell>Winnings/Game</TableCell>
-                    <TableCell>Return</TableCell>
+                    <TableCell className={styles.bodyCell}>Cash Games Played</TableCell>
+                    <TableCell className={styles.bodyCell}>AVG Players Playing</TableCell>
+                    <TableCell className={styles.bodyCell}>Buy In $</TableCell>
+                    <TableCell className={styles.bodyCell}>Buy Back $</TableCell>
+                    <TableCell className={styles.bodyCell}>Total $ In</TableCell>
+                    <TableCell className={styles.bodyCell}>Total $ Out</TableCell>
+                    <TableCell className={styles.bodyCell}>Winnings</TableCell>
+                    <TableCell className={styles.bodyCell}>Winnings/Game</TableCell>
+                    <TableCell className={styles.bodyCell}>Return</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{row.gamesPlayed}</TableCell>
-                    <TableCell>{row.avgPlayers}</TableCell>
-                    <TableCell>{formatCurrency(row.totalBuyIn)}</TableCell>
-                    <TableCell>{formatCurrency(row.totalBuyBack)}</TableCell>
-                    <TableCell>{formatCurrency(row.totalIn)}</TableCell>
-                    <TableCell>{formatCurrency(row.totalOut)}</TableCell>
-                    <TableCell>{formatCurrency(row.totalWinnings)}</TableCell>
-                    <TableCell>{formatCurrency(row.winningsPerGame)}</TableCell>
-                    <TableCell>{row.return}</TableCell>
+                    <TableCell  className={styles.headerCell}>{row.gamesPlayed}</TableCell>
+                    <TableCell  className={styles.headerCell}>{row.avgPlayers}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalBuyBack)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalIn)}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalOut)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalWinnings)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{formatPercentage(row.return)}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -90,16 +92,16 @@ export default function PlayerTable() {
             <TableHead style={{ backgroundColor: '#F0F0F0' }}>
             <TableRow>
                 <TableCell />
-                <TableCell>Player</TableCell>
-                <TableCell>Games Played</TableCell>
-                <TableCell>AVG Players</TableCell>
-                <TableCell>Buy In $</TableCell>
-                <TableCell>Buy Back $</TableCell>
-                <TableCell>Total $ In</TableCell>
-                <TableCell>Total $ Out</TableCell>
-                <TableCell>Winnings</TableCell>
-                <TableCell>Winnings/Game</TableCell>
-                <TableCell>Return</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Player</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Games Played</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>AVG Players</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Buy In $</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Buy Back $</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Total $ In</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Total $ Out</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Winnings</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Winnings/Game</TableCell>
+                <TableCell className={styles.playerTableHeaderCell}>Return</TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
