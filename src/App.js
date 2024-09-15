@@ -16,7 +16,7 @@ const App = () => {
     <Router>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#FFFFF' }}>
         <CssBaseline />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, paddingBottom: '75px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/game-summaries" element={<GameSummaries />} />

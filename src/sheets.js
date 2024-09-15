@@ -53,8 +53,7 @@ export const fetchGameSummaries = async () => {
     ...game,
     total: parseFloat(game.total.toFixed(2)) // Round to 2 decimal places
   }));
-
-  console.log("Grouped Game Summaries: ", rowsArray);
+  
   return rowsArray;
 };
 

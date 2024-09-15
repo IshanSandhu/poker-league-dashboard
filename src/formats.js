@@ -20,12 +20,12 @@ export function formatCurrency(amount) {
 
 export function formatPercentage(number)
 {
-  // Ensure the input is a number
+  console.log(number)
   const numAmount = Number(number);
 
-  // if (isNaN(numAmount)) {
-  //   return 'Invalid Amount';
-  // }
+  if (isNaN(numAmount)) {
+    return 'Invalid Amount';
+  }
 
   const percentage = (number * 100).toFixed(2);
 

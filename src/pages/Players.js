@@ -29,7 +29,7 @@ function PlayerRow({ row }) {
         <TableCell className={styles.bodyCell}>{formatCurrency(row.totalOut)}</TableCell>
         <TableCell className={styles.bodyCell}>{formatCurrency(row.totalWinnings)}</TableCell>
         <TableCell className={styles.bodyCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
-        <TableCell className={styles.bodyCell}>{formatPercentage(row.return)}</TableCell>
+        <TableCell className={styles.bodyCell}>{row.return}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={11}>
@@ -62,7 +62,7 @@ function PlayerRow({ row }) {
                     <TableCell className={styles.headerCell}>{formatCurrency(row.totalOut)}</TableCell>
                     <TableCell  className={styles.headerCell}>{formatCurrency(row.totalWinnings)}</TableCell>
                     <TableCell  className={styles.headerCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatPercentage(row.return)}</TableCell>
+                    <TableCell  className={styles.headerCell}>{row.return}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
