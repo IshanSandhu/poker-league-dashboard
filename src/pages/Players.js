@@ -14,12 +14,12 @@ function PlayerRow({ row }) {
   return (
     <>
       <TableRow>
-        <TableCell>
+        <TableCell className={styles.stickyColumn}>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>
-        <TableCell className={styles.bodyCell}>{row.playerName}</TableCell>
+        <TableCell className={`${styles.bodyCell} ${styles.stickyColumn}`}>{row.playerName}</TableCell>
         <TableCell className={styles.bodyCell}>{row.gamesPlayed}</TableCell>
         <TableCell className={styles.bodyCell}>{row.avgPlayers}</TableCell>
         <TableCell className={styles.bodyCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
@@ -40,28 +40,28 @@ function PlayerRow({ row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <TableCell className={styles.bodyCell}>Cash Games Played</TableCell>
-                    <TableCell className={styles.bodyCell}>AVG Players Playing</TableCell>
-                    <TableCell className={styles.bodyCell}>Buy In $</TableCell>
-                    <TableCell className={styles.bodyCell}>Buy Back $</TableCell>
-                    <TableCell className={styles.bodyCell}>Total $ In</TableCell>
-                    <TableCell className={styles.bodyCell}>Total $ Out</TableCell>
-                    <TableCell className={styles.bodyCell}>Winnings</TableCell>
-                    <TableCell className={styles.bodyCell}>Winnings/Game</TableCell>
-                    <TableCell className={styles.bodyCell}>Return</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Cash Games Played</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>AVG Players Playing</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Buy In $</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Buy Back $</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Total $ In</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Total $ Out</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Winnings</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Winnings/Game</TableCell>
+                    <TableCell className={`${styles.bodyCell} ${styles.stickyHeader}`}>Return</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell className={styles.headerCell}>{row.gamesPlayed}</TableCell>
-                    <TableCell className={styles.headerCell}>{row.avgPlayers}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalBuyBack)}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalIn)}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalOut)}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalWinnings)}</TableCell>
-                    <TableCell className={styles.headerCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
-                    <TableCell className={styles.headerCell}>{row.return}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{row.gamesPlayed}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{row.avgPlayers}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.totalBuyIn)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.totalBuyBack)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.totalIn)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.totalOut)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.totalWinnings)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{formatCurrency(row.winningsPerGame)}</TableCell>
+                    <TableCell className={`${styles.headerCell} ${styles.stickyHeader}`}>{row.return}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -126,7 +126,7 @@ export default function PlayerTable() {
           <TableHead style={{ backgroundColor: '#F0F0F0' }}>
             <TableRow>
               <TableCell />
-              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('playerName')}>Player</TableCell>
+              <TableCell className={`${styles.playerTableHeaderCell} ${styles.stickyColumn}`} onClick={() => requestSort('playerName')}>Player</TableCell>
               <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('gamesPlayed')}>Games Played</TableCell>
               <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('avgPlayers')}>AVG Players</TableCell>
               <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalBuyIn')}>Buy In $</TableCell>

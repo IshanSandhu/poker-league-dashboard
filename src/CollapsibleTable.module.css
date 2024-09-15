@@ -51,3 +51,21 @@
     padding: 10px 4px !important;
     background-color: #f2f2f2 !important;
   }
+
+/* Style for sticky column with default shadow */
+.stickyColumn {
+  position: sticky;
+  left: 0;
+  background: #fff; /* Ensure background color to cover content underneath */
+  z-index: 10;
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow effect */
+}
+
+/* Apply a more pronounced shadow only when the sticky column is over another column */
+.table-container .stickyColumn:not(:last-child) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Shadow when sticky column is not the last child */
+}
+
+.stickyHeader {
+/* todo*/
+}

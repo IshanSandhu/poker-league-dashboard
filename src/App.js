@@ -37,9 +37,10 @@ const App = () => {
             flexDirection: 'row',
             justifyContent: 'space-around', // Space icons evenly
             alignItems: 'center',
+            zIndex: 200
           }}
           style={{
-            boxShadow: '0px -2px 10px 0px rgba(0,0,0,0.05)', // Shadow on top for bottom navigation
+            boxShadow: '0px -4px 12px rgba(0, 0, 0, 0.2)', // More prominent shadow
           }}
         >
           <Tooltip title="Home" placement="top">
