@@ -5,8 +5,7 @@ import {
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { fetchPlayerStats } from '../sheets'; 
-import { formatCurrency } from '../formats';
-import { formatPercentage } from '../formats';
+import { formatCurrency, formatPercentage, parseFormattedValue } from '../formats';
 import styles from '../CollapsibleTable.module.css';
 
 function PlayerRow({ row }) {
@@ -54,15 +53,15 @@ function PlayerRow({ row }) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell  className={styles.headerCell}>{row.gamesPlayed}</TableCell>
-                    <TableCell  className={styles.headerCell}>{row.avgPlayers}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalBuyBack)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalIn)}</TableCell>
+                    <TableCell className={styles.headerCell}>{row.gamesPlayed}</TableCell>
+                    <TableCell className={styles.headerCell}>{row.avgPlayers}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalBuyIn)}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalBuyBack)}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalIn)}</TableCell>
                     <TableCell className={styles.headerCell}>{formatCurrency(row.totalOut)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatCurrency(row.totalWinnings)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
-                    <TableCell  className={styles.headerCell}>{row.return}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.totalWinnings)}</TableCell>
+                    <TableCell className={styles.headerCell}>{formatCurrency(row.winningsPerGame)}</TableCell>
+                    <TableCell className={styles.headerCell}>{row.return}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -76,41 +75,76 @@ function PlayerRow({ row }) {
 
 export default function PlayerTable() {
   const [rows, setRows] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: 'playerName', direction: 'asc' });
 
   useEffect(() => {
     // Fetch and set the player stats data
     fetchPlayerStats().then(data => setRows(data));
   }, []);
 
+  // Custom sort function
+  const sortedRows = React.useMemo(() => {
+    let sortableRows = [...rows];
+    const { key, direction } = sortConfig;
+    
+    sortableRows.sort((a, b) => {
+      // Use parsed values for sorting
+      const aValue = parseFormattedValue(a[key]);
+      const bValue = parseFormattedValue(b[key]);
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return direction === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return direction === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+
+      return 0;
+    });
+
+    return sortableRows;
+  }, [rows, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
   return (
     <>
-        < Typography variant="h4" component="h1" gutterBottom style={{ marginBottom: '30px' }}>
-            Player Statistics
-        </Typography>
-        <TableContainer component={Paper} elevation={3} sx={{ boxShadow: 2 }} style={{ borderRadius: '10px' }}>
+      <Typography variant="h4" component="h1" gutterBottom style={{ marginBottom: '30px' }}>
+        Player Statistics
+      </Typography>
+      <TableContainer component={Paper} elevation={3} sx={{ boxShadow: 2 }} style={{ borderRadius: '10px' }}>
         <Table aria-label="collapsible table">
-            <TableHead style={{ backgroundColor: '#F0F0F0' }}>
+          <TableHead style={{ backgroundColor: '#F0F0F0' }}>
             <TableRow>
-                <TableCell />
-                <TableCell className={styles.playerTableHeaderCell}>Player</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Games Played</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>AVG Players</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Buy In $</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Buy Back $</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Total $ In</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Total $ Out</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Winnings</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Winnings/Game</TableCell>
-                <TableCell className={styles.playerTableHeaderCell}>Return</TableCell>
+              <TableCell />
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('playerName')}>Player</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('gamesPlayed')}>Games Played</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('avgPlayers')}>AVG Players</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalBuyIn')}>Buy In $</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalBuyBack')}>Buy Back $</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalIn')}>Total $ In</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalOut')}>Total $ Out</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('totalWinnings')}>Winnings</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('winningsPerGame')}>Winnings/Game</TableCell>
+              <TableCell className={styles.playerTableHeaderCell} onClick={() => requestSort('return')}>Return</TableCell>
             </TableRow>
-            </TableHead>
-            <TableBody>
-            {rows.map((row) => (
-                <PlayerRow key={row.playerName} row={row} />
+          </TableHead>
+          <TableBody>
+            {sortedRows.map((row) => (
+              <PlayerRow key={row.playerName} row={row} />
             ))}
-            </TableBody>
+          </TableBody>
         </Table>
-        </TableContainer>
+      </TableContainer>
     </>
   );
 }

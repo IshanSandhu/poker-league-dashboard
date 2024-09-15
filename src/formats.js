@@ -1,3 +1,19 @@
+export function parseFormattedValue(value) {
+  if (typeof value === 'string') {
+    // Remove currency symbols and commas
+    if (value.startsWith('$')) {
+      return parseFloat(value.replace(/[$,]/g, ''));
+    }
+    // Remove percentage symbol and parse float
+    if (value.endsWith('%')) {
+      return parseFloat(value.replace(/%/g, '')) / 100;
+    }
+    // Parse as plain number
+    return parseFloat(value);
+  }
+  return value;
+}
+
 
 export function formatCurrency(amount) {
     // Ensure the input is a number

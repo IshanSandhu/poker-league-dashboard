@@ -69,11 +69,36 @@ function Row({ row }) {
 
 export default function CollapsibleTable() {
   const [rows, setRows] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'asc' });
 
   useEffect(() => {
     // Fetch and set the game summaries data
     fetchGameSummaries().then(data => setRows(data));
   }, []);
+
+  const sortedRows = React.useMemo(() => {
+    let sortableRows = [...rows];
+    if (sortConfig !== null) {
+      sortableRows.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableRows;
+  }, [rows, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
     <>
@@ -85,15 +110,15 @@ export default function CollapsibleTable() {
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell />
-              <TableCell className={styles.tableHeaderCell}>Date</TableCell>
-              <TableCell className={styles.tableHeaderCell}>Game #</TableCell>
-              <TableCell className={styles.tableHeaderCell}>Location</TableCell>
-              <TableCell className={styles.tableHeaderCell}># Players</TableCell>
-              <TableCell className={styles.tableHeaderCell}>Total $</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game Date</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game #</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('location')}>Location</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('playersPlaying')}># Players</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('total')}>Total $</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {sortedRows.map((row) => (
               <Row key={row.gameNumber} row={row} />
             ))}
           </TableBody>
