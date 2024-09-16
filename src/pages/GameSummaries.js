@@ -133,7 +133,7 @@ export default function CollapsibleTable() {
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell />
-              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('date')}>Game Date</TableCell>
+              <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game Date</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('gameNumber')}>Game #</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('location')}>Location</TableCell>
               <TableCell className={styles.tableHeaderCell} onClick={() => requestSort('playersPlaying')}># Players</TableCell>
